@@ -4,15 +4,6 @@ class Node:
         self.left = None
         self.right = None
 
-    def in_order(self):
-        if self.left:
-            self.left.in_order()
-        print(self.item)
-        if self.right:
-            self.right.in_order()
-        return
-
-
 class BST:
     def __init__(self):
         self.root = None
@@ -95,7 +86,25 @@ class BST:
 
     def in_order(self):
         if self.root:
-            self.root.in_order()
+            self.morris_traversal(self.root)
+  
+    def morris_traversal(self, root):
+        current = root
+        while current:
+            if current.left is None:
+                print(current.item)
+                current = current.right
+            else:
+                pre = current.left
+                while pre.right is not None and pre.right is not current:
+                    pre = pre.right
+                if pre.right is None:
+                    pre.right = current
+                    current = current.left
+                else:
+                    pre.right = None
+                    print(current.item)
+                    current = current.right
 
     def min(self):
         if self.root:
