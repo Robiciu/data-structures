@@ -10,16 +10,7 @@ class Node:
         print(self.item)
         if self.right:
             self.right.in_order()
-
-    def min(self):
-        if self.left:
-            return self.left.min()
-        return self
-
-    def max(self):
-        if self.right:
-            return self.right.max()
-        return self
+        return
 
 
 class BST:
@@ -52,7 +43,7 @@ class BST:
             elif self.root.left is None and self.root.right:
                 self.root = self.root.right
             else:
-                min_right = self.root.right.min()
+                min_right = self._min(self.root.right)
                 left_child = self.root.left
                 min_right.left = left_child
                 self.root = self.root.right
@@ -81,7 +72,7 @@ class BST:
                 else:
                     parent.right = current.right
             else:
-                min_right = current.right.min()
+                min_right = self._min(current.right)
                 left_child = current.left
                 min_right.left = left_child
                 if current.item < parent.item:
@@ -108,8 +99,20 @@ class BST:
 
     def min(self):
         if self.root:
-            return self.root.min().item
+            return self._min(self.root).item
+
+    def _min(self, root):
+        current = root
+        while current.left:
+            current = current.left
+        return current
 
     def max(self):
         if self.root:
-            return self.root.max().item
+            return self._max(self.root).item
+
+    def _max(self, root):
+        current = root
+        while current.right:
+            current = current.right
+        return current
